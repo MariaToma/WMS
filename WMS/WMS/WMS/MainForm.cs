@@ -22,5 +22,23 @@ namespace WMS
             Form form = new UnprocessedOrders();
             form.Show();
         }
+
+        private void btnCurrentSales_Click(object sender, EventArgs e)
+        {
+            Form currentSales = new CurrentSales();
+            currentSales.ShowDialog();
+        }
+
+        private void btnRefill_Click(object sender, EventArgs e)
+        {
+            Form MakeRefill = new MakeRefillForm();
+            MakeRefill.ShowDialog();
+        }
+
+        private void btnStock_Click(object sender, EventArgs e)
+        {
+            Form Stock = new StockForm();
+            Stock.ShowDialog();
+        }
     }
 }

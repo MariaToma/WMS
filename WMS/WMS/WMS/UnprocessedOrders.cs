@@ -44,8 +44,6 @@ namespace WMS
                         MessageBox.Show(ex.Message.ToString());
                     }
 
-
-
             }
         }
 
@@ -59,6 +57,7 @@ namespace WMS
         {
             using (var context = new WMSEntities())
             {
+               
                 using (var dbContextTransaction = context.Database.BeginTransaction())
                 {
                     try
@@ -71,7 +70,8 @@ namespace WMS
                                           SourceWarehouseID = p.WarehouseID,
                                           units = p.UnitsInStock,
                                           prodID = p.ProductID,
-                                          rowID = p.RowID
+                                          rowID = p.RowID,
+                                          price = p.UnitPrice
                                       });
 
                         if (!string.IsNullOrWhiteSpace(result.ToString()))
@@ -92,12 +92,15 @@ namespace WMS
                                         {
                                             int sourceID;
                                             Int32.TryParse(rez[0].SourceWarehouseID.ToString(), out sourceID);
-                                            Form refill = new RefillForm(sourceID, DestinationWarehouseID, Product, Quantity);
+                                            float price = float.Parse(rez[0].price.ToString());
+                                            Form refill = new RefillForm(sourceID, DestinationWarehouseID, Product, Quantity,false);
                                             refill.ShowDialog();
                                             context.RefillFromWarehouse(rez[0].SourceWarehouseID, DestinationWarehouseID, quantity, Product);
                                             refill.Close();
+                                  //          Form BarCodeCheck = new BarCodeCheck(rez[0].prodID);
+                                    //        BarCodeCheck.Show();
                                             MessageBox.Show("The refill is done! Order is ready to be processed! ");
-                                            Form fr = new ProcessingOrder(OrderID.ToString(), ClientName, Adress, Product, quantity, rez[0].rowID);
+                                            Form fr = new ProcessingOrder(OrderID.ToString(), ClientName, Adress, Product, quantity, rez[0].rowID,price);
                                             fr.Show();
                                             context.UpdateDB(Product, quantity, DestinationWarehouseID);
                                             context.SaveChanges();
@@ -107,36 +110,37 @@ namespace WMS
                                             dbContextTransaction.Commit();
 
                                             break;
-
-
                                         };
                                     case DialogResult.No:
                                         {
                                             break;
                                         };
                                 }
-
                             }
-
                             else
                             {
-                                var prodID = (from p in context.Products
-                                              where p.ProductName.Equals(Product)
-                                              select p).First().ProductID;
+                                var rez = (from p in context.Products
+                                           where p.ProductName.Equals(Product)
+                                           select new
+                                           {
+                                               prodID = p.ProductID,
+                                               rowID = p.RowID,
+                                               Price = p.UnitPrice
 
-                                var rowID = (from p in context.Products
-                                             where p.ProductName.Equals(Product)
-                                             select p).First().RowID;
-                                Form refill = new RefillForm(0, DestinationWarehouseID, Product, Quantity);
+                                           }).ToList();
+                                         
+                                Form refill = new RefillForm(0, DestinationWarehouseID, Product, Quantity,false);
                                 refill.ShowDialog();
-
+                               // Form BarCodeCheck = new BarCodeCheck(rez[0].prodID);
+                                //BarCodeCheck.Show();
                                 context.RefillFromWarehouse(0, DestinationWarehouseID, quantity, Product);
                                 context.SaveChanges();
                                 refill.Close();
                                 MessageBox.Show("The refill is done! Order is ready to be processed! ");
-                                Form fr = new ProcessingOrder(OrderID.ToString(), ClientName, Adress, Product, quantity, rowID);
+                                float price = float.Parse(rez[0].Price.ToString());
+                                Form fr = new ProcessingOrder(OrderID.ToString(), ClientName, Adress, Product, quantity, rez[0].rowID,price);
                                 fr.Show();
-                                context.MarkProcessed(OrderID, prodID);
+                                context.MarkProcessed(OrderID, rez[0].prodID);
                                 context.SaveChanges();
                                 context.UpdateDB(Product, quantity, DestinationWarehouseID);
                                 context.SaveChanges();
@@ -144,15 +148,15 @@ namespace WMS
 
                             }
                         }
-                    }
-                    catch (Exception ex)
-                    {
-                        MessageBox.Show(ex.Message.ToString());
-                        dbContextTransaction.Rollback();
-                    }
-
                 }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message.ToString());
+                    dbContextTransaction.Rollback();
+                }
+
             }
+           }
         }
 
         private void btnProcessOrder_Click(object sender, EventArgs e)
@@ -217,12 +221,20 @@ namespace WMS
                                             }
                                             else
                                             {
-                                                var rowID = (from p in context.Products
-                                                             where p.ProductName.Equals(Product)
-                                                             select p).First().RowID;
+                                                var rez = (from p in context.Products
+                                                           where p.ProductName.Equals(Product)
+                                                           select new
+                                                           {
+                                                              
+                                                               rowID = p.RowID,
+                                                               Price = p.UnitPrice,
+                                                               prodID=p.ProductID
+
+                                                           }).ToList();
 
                                                 int quantity = Int32.Parse(Quantity);
-                                                Form processingForm = new ProcessingOrder(OrderID, ClientName, Adress, Product, quantity, rowID);
+                                                float price = float.Parse(rez[0].Price.ToString());
+                                                Form processingForm = new ProcessingOrder(OrderID, ClientName, Adress, Product, quantity, rez[0].rowID,price);
                                                 processingForm.Show();
                                                 int units = Int32.Parse(Quantity);
                                                 int orderID = Int32.Parse(OrderID);

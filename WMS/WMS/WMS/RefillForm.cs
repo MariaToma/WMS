@@ -12,12 +12,15 @@ namespace WMS
 {
     public partial class RefillForm : Form
     {
-        public RefillForm(int source, int destination, string product,string quantity)
+        public RefillForm(int source, int destination, string product,string quantity,bool OK)
         {
             InitializeComponent();
             if (source == 0)
             {
+                if(OK==false) 
                 textBox1.Text = String.Format(String.Format("Can not find enough units in any warehouse! Refilling warehouse {0} from factory with product -> {1}, quantity-> {2}...", destination,product, quantity));
+                if(OK==true) // atunci cand se ajunge aici prin butonul Make a refill
+                    textBox1.Text = String.Format(String.Format("Refilling warehouse {0} from factory with product -> {1}, quantity-> {2}...", destination, product, quantity));
                 textBox1.Font = new Font(textBox1.Font.FontFamily, 16);
             }
             else

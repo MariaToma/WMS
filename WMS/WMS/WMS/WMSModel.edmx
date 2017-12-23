@@ -97,6 +97,16 @@
           <Property Name="Address" Type="nvarchar" MaxLength="100" />
           <Property Name="NumberOfRows" Type="int" />
         </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'WMS.dbo.CurrentSales' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="CurrentSales">
+          <Key>
+            <PropertyRef Name="OrderID" />
+          </Key>
+          <Property Name="OrderID" Type="int" Nullable="false" />
+          <Property Name="WarehouseID" Type="int" />
+          <Property Name="TotalPrice" Type="money" />
+        </EntityType>
         <Association Name="FK_Clients">
           <End Role="Clients" Type="Self.Clients" Multiplicity="1" />
           <End Role="ClientOrders" Type="Self.ClientOrders" Multiplicity="*" />
@@ -252,6 +262,13 @@
           <EntitySet Name="SuggestedRefillOrders" EntityType="Self.SuggestedRefillOrders" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Warehouses" EntityType="Self.Warehouses" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="CurrentSales" EntityType="Self.CurrentSales" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [CurrentSales].[OrderID] AS [OrderID], 
+    [CurrentSales].[WarehouseID] AS [WarehouseID], 
+    [CurrentSales].[TotalPrice] AS [TotalPrice]
+    FROM [dbo].[CurrentSales] AS [CurrentSales]</DefiningQuery>
+          </EntitySet>
           <AssociationSet Name="FK_Clients" Association="Self.FK_Clients">
             <End Role="Clients" EntitySet="Clients" />
             <End Role="ClientOrders" EntitySet="ClientOrders" />
@@ -553,6 +570,7 @@
             <End Role="Warehouse" EntitySet="Warehouses" />
             <End Role="SuggestedRefillOrder" EntitySet="SuggestedRefillOrders" />
           </AssociationSet>
+          <EntitySet Name="CurrentSales" EntityType="WMSModel.CurrentSale" />
         </EntityContainer>
         <ComplexType Name="sp_helpdiagramdefinition_Result">
           <Property Type="Int32" Name="version" Nullable="true" />
@@ -599,6 +617,14 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="CurrentSale">
+          <Key>
+            <PropertyRef Name="OrderID" />
+          </Key>
+          <Property Name="OrderID" Type="Int32" Nullable="false" />
+          <Property Name="WarehouseID" Type="Int32" />
+          <Property Name="TotalPrice" Type="Decimal" Precision="19" Scale="4" />
+        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -726,6 +752,15 @@
                 <ScalarProperty Name="ProductID" ColumnName="ProductID" />
                 <ScalarProperty Name="WarehouseID" ColumnName="WarehouseID" />
                 <ScalarProperty Name="SuggestedOrderID" ColumnName="SuggestedOrderID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CurrentSales">
+            <EntityTypeMapping TypeName="WMSModel.CurrentSale">
+              <MappingFragment StoreEntitySet="CurrentSales">
+                <ScalarProperty Name="TotalPrice" ColumnName="TotalPrice" />
+                <ScalarProperty Name="WarehouseID" ColumnName="WarehouseID" />
+                <ScalarProperty Name="OrderID" ColumnName="OrderID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

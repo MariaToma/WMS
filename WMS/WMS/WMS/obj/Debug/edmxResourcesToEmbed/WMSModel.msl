@@ -125,5 +125,14 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
+    <EntitySetMapping Name="CurrentSales">
+      <EntityTypeMapping TypeName="WMSModel.CurrentSale">
+        <MappingFragment StoreEntitySet="CurrentSales">
+          <ScalarProperty Name="TotalPrice" ColumnName="TotalPrice" />
+          <ScalarProperty Name="WarehouseID" ColumnName="WarehouseID" />
+          <ScalarProperty Name="OrderID" ColumnName="OrderID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
   </EntityContainerMapping>
 </Mapping>

@@ -37,6 +37,7 @@ namespace WMS
         public virtual DbSet<sysdiagram> sysdiagrams { get; set; }
         public virtual DbSet<Warehouse> Warehouses { get; set; }
         public virtual DbSet<SuggestedRefillOrder> SuggestedRefillOrders { get; set; }
+        public virtual DbSet<CurrentSale> CurrentSales { get; set; }
     
         public virtual int DeleteOrder(Nullable<int> orderID, string clientName)
         {

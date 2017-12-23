@@ -16,13 +16,14 @@ namespace WMS
         string ClientName;
         string Adress;
         string Products;
-        public ProcessingOrder(string a,string b, string c,string d,int quantity,int rowID)
+        public ProcessingOrder(string a,string b, string c,string d,int quantity,int rowID,float price)
         {
             InitializeComponent();
             this.OrderID = a;
             this.ClientName = b;
             this.Adress = c;
             this.Products = d;
+            float total = price * quantity;
             txtProcessing.Multiline = true;
             txtProcessing.ScrollBars = ScrollBars.Horizontal;
             txtProcessing.AcceptsTab = true;
@@ -30,6 +31,8 @@ namespace WMS
             txtProcessing.Text = String.Format("Processing order {0} to client {1}", OrderID, ClientName).ToString();
             txtProcessing.AppendText(Environment.NewLine);
             txtProcessing.AppendText(String.Format("adress {0}, Products-> {1}...", Adress, Products));
+            txtProcessing.AppendText(Environment.NewLine);
+            txtProcessing.AppendText(String.Format("Total sum={0}", total));
             Form Picking = new PickingForm(Products, rowID, quantity);
             Picking.ShowDialog();
            

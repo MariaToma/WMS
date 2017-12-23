@@ -264,6 +264,7 @@
       <End Role="Warehouse" EntitySet="Warehouses" />
       <End Role="SuggestedRefillOrder" EntitySet="SuggestedRefillOrders" />
     </AssociationSet>
+    <EntitySet Name="CurrentSales" EntityType="WMSModel.CurrentSale" />
   </EntityContainer>
   <ComplexType Name="sp_helpdiagramdefinition_Result">
     <Property Type="Int32" Name="version" Nullable="true" />
@@ -310,4 +311,12 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <EntityType Name="CurrentSale">
+    <Key>
+      <PropertyRef Name="OrderID" />
+    </Key>
+    <Property Name="OrderID" Type="Int32" Nullable="false" />
+    <Property Name="WarehouseID" Type="Int32" />
+    <Property Name="TotalPrice" Type="Decimal" Precision="19" Scale="4" />
+  </EntityType>
 </Schema>
