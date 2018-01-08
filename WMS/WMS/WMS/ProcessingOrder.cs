@@ -47,14 +47,12 @@ namespace WMS
             {
                 Caluculate(j);
                 progressBar1.PerformStep();
-                btnOK.Focus();
                 //this.Close();
             }
             if(progressBar1.Value== 100000)
             txtDone.Text = "Order processed";
-           
-          
-           
+
+            
         }
         
         private void txtProcessing_TextChanged(object sender, EventArgs e)
@@ -69,6 +67,11 @@ namespace WMS
         private void btnOK_Click(object sender, EventArgs e)
         {
             this.Close();
+        }
+
+        private void ProcessingOrder_Load(object sender, EventArgs e)
+        {
+
         }
     }
 }

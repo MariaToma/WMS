@@ -118,7 +118,6 @@
     <EntitySetMapping Name="SuggestedRefillOrders">
       <EntityTypeMapping TypeName="WMSModel.SuggestedRefillOrder">
         <MappingFragment StoreEntitySet="SuggestedRefillOrders">
-          <ScalarProperty Name="Quantity" ColumnName="Quantity" />
           <ScalarProperty Name="ProductID" ColumnName="ProductID" />
           <ScalarProperty Name="WarehouseID" ColumnName="WarehouseID" />
           <ScalarProperty Name="SuggestedOrderID" ColumnName="SuggestedOrderID" />
@@ -134,5 +133,6 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
+    <FunctionImportMapping FunctionImportName="AcceptSuggestion" FunctionName="WMSModel.Store.AcceptSuggestion" />
   </EntityContainerMapping>
 </Mapping>

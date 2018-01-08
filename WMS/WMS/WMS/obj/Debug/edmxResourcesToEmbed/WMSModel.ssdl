@@ -72,7 +72,6 @@
     <Property Name="SuggestedOrderID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="WarehouseID" Type="int" />
     <Property Name="ProductID" Type="int" />
-    <Property Name="Quantity" Type="int" />
   </EntityType>
   <EntityType Name="sysdiagrams">
     <Key>
@@ -200,6 +199,10 @@ warning 6002: The table/view 'WMS.dbo.CurrentSales' does not have a primary key 
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Function Name="AcceptSuggestion" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="Sid" Type="int" Mode="In" />
+    <Parameter Name="Q" Type="int" Mode="In" />
+  </Function>
   <Function Name="fn_diagramobjects" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" ReturnType="int" />
   <Function Name="MarkProcessed" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
     <Parameter Name="OrderID" Type="int" Mode="In" />

@@ -39,7 +39,7 @@
             // warehousesComboBox
             // 
             this.warehousesComboBox.FormattingEnabled = true;
-            this.warehousesComboBox.Location = new System.Drawing.Point(412, 91);
+            this.warehousesComboBox.Location = new System.Drawing.Point(360, 91);
             this.warehousesComboBox.Name = "warehousesComboBox";
             this.warehousesComboBox.Size = new System.Drawing.Size(143, 24);
             this.warehousesComboBox.TabIndex = 0;
@@ -56,9 +56,9 @@
             // 
             // btnCurrentSales
             // 
-            this.btnCurrentSales.Location = new System.Drawing.Point(639, 78);
+            this.btnCurrentSales.Location = new System.Drawing.Point(573, 78);
             this.btnCurrentSales.Name = "btnCurrentSales";
-            this.btnCurrentSales.Size = new System.Drawing.Size(102, 48);
+            this.btnCurrentSales.Size = new System.Drawing.Size(168, 77);
             this.btnCurrentSales.TabIndex = 2;
             this.btnCurrentSales.Text = "See current sales";
             this.btnCurrentSales.UseVisualStyleBackColor = true;
@@ -79,7 +79,7 @@
             this.btnReport.Name = "btnReport";
             this.btnReport.Size = new System.Drawing.Size(255, 65);
             this.btnReport.TabIndex = 4;
-            this.btnReport.Text = "Make a report";
+            this.btnReport.Text = "Make a sales report";
             this.btnReport.UseVisualStyleBackColor = true;
             this.btnReport.Click += new System.EventHandler(this.btnReport_Click);
             // 

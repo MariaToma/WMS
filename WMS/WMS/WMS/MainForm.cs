@@ -40,5 +40,28 @@ namespace WMS
             Form Stock = new StockForm();
             Stock.ShowDialog();
         }
+
+        private void btnProcessedOrders_Click(object sender, EventArgs e)
+        {
+            Form form = new ProcessedOrders();
+            form.Show();
+        }
+
+        private void btnSuggestedRefill_Click(object sender, EventArgs e)
+        {
+            Form form = new SuggestedReffils();
+            form.Show();
+        }
+
+        private void MainForm_Load(object sender, EventArgs e)
+        {
+
+        }
+
+        private void btnRefillOrders_Click(object sender, EventArgs e)
+        {
+            Form refill = new RefillOrders();
+            refill.Show();
+        }
     }
 }

@@ -77,7 +77,6 @@
           <Property Name="SuggestedOrderID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="WarehouseID" Type="int" />
           <Property Name="ProductID" Type="int" />
-          <Property Name="Quantity" Type="int" />
         </EntityType>
         <EntityType Name="sysdiagrams">
           <Key>
@@ -205,6 +204,10 @@ warning 6002: The table/view 'WMS.dbo.CurrentSales' does not have a primary key 
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Function Name="AcceptSuggestion" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="Sid" Type="int" Mode="In" />
+          <Parameter Name="Q" Type="int" Mode="In" />
+        </Function>
         <Function Name="fn_diagramobjects" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" ReturnType="int" />
         <Function Name="MarkProcessed" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="OrderID" Type="int" Mode="In" />
@@ -571,6 +574,10 @@ warning 6002: The table/view 'WMS.dbo.CurrentSales' does not have a primary key 
             <End Role="SuggestedRefillOrder" EntitySet="SuggestedRefillOrders" />
           </AssociationSet>
           <EntitySet Name="CurrentSales" EntityType="WMSModel.CurrentSale" />
+          <FunctionImport Name="AcceptSuggestion">
+            <Parameter Name="Sid" Mode="In" Type="Int32" />
+            <Parameter Name="Q" Mode="In" Type="Int32" />
+          </FunctionImport>
         </EntityContainer>
         <ComplexType Name="sp_helpdiagramdefinition_Result">
           <Property Type="Int32" Name="version" Nullable="true" />
@@ -602,7 +609,6 @@ warning 6002: The table/view 'WMS.dbo.CurrentSales' does not have a primary key 
           <Property Name="SuggestedOrderID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="WarehouseID" Type="Int32" />
           <Property Name="ProductID" Type="Int32" />
-          <Property Name="Quantity" Type="Int32" />
           <NavigationProperty Name="Warehouse" Relationship="WMSModel.FK_ware" FromRole="SuggestedRefillOrder" ToRole="Warehouse" />
         </EntityType>
         <Association Name="FK_ware">
@@ -748,7 +754,6 @@ warning 6002: The table/view 'WMS.dbo.CurrentSales' does not have a primary key 
           <EntitySetMapping Name="SuggestedRefillOrders">
             <EntityTypeMapping TypeName="WMSModel.SuggestedRefillOrder">
               <MappingFragment StoreEntitySet="SuggestedRefillOrders">
-                <ScalarProperty Name="Quantity" ColumnName="Quantity" />
                 <ScalarProperty Name="ProductID" ColumnName="ProductID" />
                 <ScalarProperty Name="WarehouseID" ColumnName="WarehouseID" />
                 <ScalarProperty Name="SuggestedOrderID" ColumnName="SuggestedOrderID" />
@@ -764,6 +769,7 @@ warning 6002: The table/view 'WMS.dbo.CurrentSales' does not have a primary key 
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="AcceptSuggestion" FunctionName="WMSModel.Store.AcceptSuggestion" />
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

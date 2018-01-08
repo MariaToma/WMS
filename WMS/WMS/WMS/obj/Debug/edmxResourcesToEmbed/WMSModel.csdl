@@ -265,6 +265,10 @@
       <End Role="SuggestedRefillOrder" EntitySet="SuggestedRefillOrders" />
     </AssociationSet>
     <EntitySet Name="CurrentSales" EntityType="WMSModel.CurrentSale" />
+    <FunctionImport Name="AcceptSuggestion">
+      <Parameter Name="Sid" Mode="In" Type="Int32" />
+      <Parameter Name="Q" Mode="In" Type="Int32" />
+    </FunctionImport>
   </EntityContainer>
   <ComplexType Name="sp_helpdiagramdefinition_Result">
     <Property Type="Int32" Name="version" Nullable="true" />
@@ -296,7 +300,6 @@
     <Property Name="SuggestedOrderID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
     <Property Name="WarehouseID" Type="Int32" />
     <Property Name="ProductID" Type="Int32" />
-    <Property Name="Quantity" Type="Int32" />
     <NavigationProperty Name="Warehouse" Relationship="WMSModel.FK_ware" FromRole="SuggestedRefillOrder" ToRole="Warehouse" />
   </EntityType>
   <Association Name="FK_ware">
