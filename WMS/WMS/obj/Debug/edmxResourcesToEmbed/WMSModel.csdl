@@ -1,0 +1,325 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="WMSModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="ClientOrderDetail">
+    <Key>
+      <PropertyRef Name="OrderID" />
+      <PropertyRef Name="ProductID" />
+    </Key>
+    <Property Name="OrderID" Type="Int32" Nullable="false" />
+    <Property Name="ClientID" Type="Int32" />
+    <Property Name="ProductID" Type="Int32" Nullable="false" />
+    <Property Name="Quantity" Type="Int32" />
+    <Property Name="OrderState" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="ClientOrder" Relationship="Self.FK_Order1" FromRole="ClientOrderDetails" ToRole="ClientOrders" />
+    <Property Name="WarehouseID" Type="Int32" />
+    <NavigationProperty Name="Warehouse" Relationship="WMSModel.FK_MainWarehouse" FromRole="ClientOrderDetail" ToRole="Warehouse" />
+  </EntityType>
+  <EntityType Name="ClientOrder">
+    <Key>
+      <PropertyRef Name="OrderID" />
+      <PropertyRef Name="ClientID" />
+    </Key>
+    <Property Name="OrderID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="ClientID" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="ClientOrderDetails" Relationship="Self.FK_Order1" FromRole="ClientOrders" ToRole="ClientOrderDetails" />
+    <NavigationProperty Name="Client" Relationship="Self.FK_Clients" FromRole="ClientOrders" ToRole="Clients" />
+  </EntityType>
+  <EntityType Name="Client">
+    <Key>
+      <PropertyRef Name="ClientID" />
+    </Key>
+    <Property Name="ClientID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Address" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="ClientOrders" Relationship="Self.FK_Clients" FromRole="Clients" ToRole="ClientOrders" />
+  </EntityType>
+  <EntityType Name="Product">
+    <Key>
+      <PropertyRef Name="ProductID" />
+      <PropertyRef Name="WarehouseID" />
+      <PropertyRef Name="RowID" />
+    </Key>
+    <Property Name="ProductID" Type="Int32" Nullable="false" />
+    <Property Name="ProductName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="UnitPrice" Type="Decimal" Precision="19" Scale="4" />
+    <Property Name="UnitsInStock" Type="Int32" />
+    <Property Name="WarehouseID" Type="Int32" Nullable="false" />
+    <Property Name="RowID" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="Row" Relationship="Self.FK_Row" FromRole="Products" ToRole="Rows" />
+    <NavigationProperty Name="Warehouse" Relationship="Self.FK_Warehouse" FromRole="Products" ToRole="Warehouses" />
+  </EntityType>
+  <EntityType Name="RefillOrderDetail">
+    <Key>
+      <PropertyRef Name="OrderID" />
+      <PropertyRef Name="ProductID" />
+    </Key>
+    <Property Name="OrderID" Type="Int32" Nullable="false" />
+    <Property Name="ProductID" Type="Int32" Nullable="false" />
+    <Property Name="Quantity" Type="Int32" />
+    <NavigationProperty Name="RefillOrder" Relationship="Self.FK_Order" FromRole="RefillOrderDetails" ToRole="RefillOrders" />
+  </EntityType>
+  <EntityType Name="RefillOrder">
+    <Key>
+      <PropertyRef Name="OrderID" />
+    </Key>
+    <Property Name="OrderID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="OrderSource" Type="Int32" Nullable="false" />
+    <Property Name="OrderDestination" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="RefillOrderDetails" Relationship="Self.FK_Order" FromRole="RefillOrders" ToRole="RefillOrderDetails" />
+    <NavigationProperty Name="Warehouse" Relationship="Self.FK_Destination" FromRole="RefillOrders" ToRole="Warehouses" />
+  </EntityType>
+  <EntityType Name="Row">
+    <Key>
+      <PropertyRef Name="RowID" />
+    </Key>
+    <Property Name="RowID" Type="Int32" Nullable="false" />
+    <Property Name="MaxProductsPerShelf" Type="Int32" />
+    <NavigationProperty Name="Products" Relationship="Self.FK_Row" FromRole="Rows" ToRole="Products" />
+  </EntityType>
+  <EntityType Name="sysdiagram">
+    <Key>
+      <PropertyRef Name="diagram_id" />
+    </Key>
+    <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="principal_id" Type="Int32" Nullable="false" />
+    <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="version" Type="Int32" />
+    <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+  </EntityType>
+  <EntityType Name="Warehouse">
+    <Key>
+      <PropertyRef Name="WarehouseID" />
+    </Key>
+    <Property Name="WarehouseID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Address" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="NumberOfRows" Type="Int32" />
+    <NavigationProperty Name="Products" Relationship="Self.FK_Warehouse" FromRole="Warehouses" ToRole="Products" />
+    <NavigationProperty Name="RefillOrders" Relationship="Self.FK_Destination" FromRole="Warehouses" ToRole="RefillOrders" />
+    <NavigationProperty Name="ClientOrderDetails" Relationship="WMSModel.FK_MainWarehouse" FromRole="Warehouse" ToRole="ClientOrderDetail" />
+    <NavigationProperty Name="SuggestedRefillOrders" Relationship="WMSModel.FK_ware" FromRole="Warehouse" ToRole="SuggestedRefillOrder" />
+  </EntityType>
+  <Association Name="FK_Order1">
+    <End Role="ClientOrders" Type="Self.ClientOrder" Multiplicity="0..1" />
+    <End Role="ClientOrderDetails" Type="Self.ClientOrderDetail" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ClientOrders">
+        <PropertyRef Name="OrderID" />
+        <PropertyRef Name="ClientID" />
+      </Principal>
+      <Dependent Role="ClientOrderDetails">
+        <PropertyRef Name="OrderID" />
+        <PropertyRef Name="ClientID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Clients">
+    <End Role="Clients" Type="Self.Client" Multiplicity="1" />
+    <End Role="ClientOrders" Type="Self.ClientOrder" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Clients">
+        <PropertyRef Name="ClientID" />
+      </Principal>
+      <Dependent Role="ClientOrders">
+        <PropertyRef Name="ClientID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Row">
+    <End Role="Rows" Type="Self.Row" Multiplicity="1" />
+    <End Role="Products" Type="Self.Product" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Rows">
+        <PropertyRef Name="RowID" />
+      </Principal>
+      <Dependent Role="Products">
+        <PropertyRef Name="RowID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Warehouse">
+    <End Role="Warehouses" Type="Self.Warehouse" Multiplicity="1" />
+    <End Role="Products" Type="Self.Product" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Warehouses">
+        <PropertyRef Name="WarehouseID" />
+      </Principal>
+      <Dependent Role="Products">
+        <PropertyRef Name="WarehouseID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Order">
+    <End Role="RefillOrders" Type="Self.RefillOrder" Multiplicity="1" />
+    <End Role="RefillOrderDetails" Type="Self.RefillOrderDetail" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="RefillOrders">
+        <PropertyRef Name="OrderID" />
+      </Principal>
+      <Dependent Role="RefillOrderDetails">
+        <PropertyRef Name="OrderID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Destination">
+    <End Role="Warehouses" Type="Self.Warehouse" Multiplicity="1" />
+    <End Role="RefillOrders" Type="Self.RefillOrder" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Warehouses">
+        <PropertyRef Name="WarehouseID" />
+      </Principal>
+      <Dependent Role="RefillOrders">
+        <PropertyRef Name="OrderDestination" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="WMSEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="ClientOrderDetails" EntityType="Self.ClientOrderDetail" />
+    <EntitySet Name="ClientOrders" EntityType="Self.ClientOrder" />
+    <EntitySet Name="Clients" EntityType="Self.Client" />
+    <EntitySet Name="Products" EntityType="Self.Product" />
+    <EntitySet Name="RefillOrderDetails" EntityType="Self.RefillOrderDetail" />
+    <EntitySet Name="RefillOrders" EntityType="Self.RefillOrder" />
+    <EntitySet Name="Rows" EntityType="Self.Row" />
+    <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagram" />
+    <EntitySet Name="Warehouses" EntityType="Self.Warehouse" />
+    <AssociationSet Name="FK_Order1" Association="Self.FK_Order1">
+      <End Role="ClientOrders" EntitySet="ClientOrders" />
+      <End Role="ClientOrderDetails" EntitySet="ClientOrderDetails" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Clients" Association="Self.FK_Clients">
+      <End Role="Clients" EntitySet="Clients" />
+      <End Role="ClientOrders" EntitySet="ClientOrders" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Row" Association="Self.FK_Row">
+      <End Role="Rows" EntitySet="Rows" />
+      <End Role="Products" EntitySet="Products" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Warehouse" Association="Self.FK_Warehouse">
+      <End Role="Warehouses" EntitySet="Warehouses" />
+      <End Role="Products" EntitySet="Products" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Order" Association="Self.FK_Order">
+      <End Role="RefillOrders" EntitySet="RefillOrders" />
+      <End Role="RefillOrderDetails" EntitySet="RefillOrderDetails" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Destination" Association="Self.FK_Destination">
+      <End Role="Warehouses" EntitySet="Warehouses" />
+      <End Role="RefillOrders" EntitySet="RefillOrders" />
+    </AssociationSet>
+    <FunctionImport Name="DeleteOrder">
+      <Parameter Name="OrderID" Mode="In" Type="Int32" />
+      <Parameter Name="ClientName" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="sp_alterdiagram">
+      <Parameter Name="diagramname" Mode="In" Type="String" />
+      <Parameter Name="owner_id" Mode="In" Type="Int32" />
+      <Parameter Name="version" Mode="In" Type="Int32" />
+      <Parameter Name="definition" Mode="In" Type="Binary" />
+    </FunctionImport>
+    <FunctionImport Name="sp_creatediagram">
+      <Parameter Name="diagramname" Mode="In" Type="String" />
+      <Parameter Name="owner_id" Mode="In" Type="Int32" />
+      <Parameter Name="version" Mode="In" Type="Int32" />
+      <Parameter Name="definition" Mode="In" Type="Binary" />
+    </FunctionImport>
+    <FunctionImport Name="sp_dropdiagram">
+      <Parameter Name="diagramname" Mode="In" Type="String" />
+      <Parameter Name="owner_id" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="sp_helpdiagramdefinition" ReturnType="Collection(WMSModel.sp_helpdiagramdefinition_Result)">
+      <Parameter Name="diagramname" Mode="In" Type="String" />
+      <Parameter Name="owner_id" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="sp_helpdiagrams" ReturnType="Collection(WMSModel.sp_helpdiagrams_Result)">
+      <Parameter Name="diagramname" Mode="In" Type="String" />
+      <Parameter Name="owner_id" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="sp_renamediagram">
+      <Parameter Name="diagramname" Mode="In" Type="String" />
+      <Parameter Name="owner_id" Mode="In" Type="Int32" />
+      <Parameter Name="new_diagramname" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="sp_upgraddiagrams" />
+    <AssociationSet Name="FK_MainWarehouse" Association="WMSModel.FK_MainWarehouse">
+      <End Role="Warehouse" EntitySet="Warehouses" />
+      <End Role="ClientOrderDetail" EntitySet="ClientOrderDetails" />
+    </AssociationSet>
+    <FunctionImport Name="RefillFromWarehouse">
+      <Parameter Name="SourceWarehouseID" Mode="In" Type="Int32" />
+      <Parameter Name="DestinationWarehouseID" Mode="In" Type="Int32" />
+      <Parameter Name="Units" Mode="In" Type="Int32" />
+      <Parameter Name="ProductName" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="MarkProcessed">
+      <Parameter Name="OrderID" Mode="In" Type="Int32" />
+      <Parameter Name="ProductID" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="UpdateDB">
+      <Parameter Name="ProductName" Mode="In" Type="String" />
+      <Parameter Name="Units" Mode="In" Type="Int32" />
+      <Parameter Name="WarehouseID" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <EntitySet Name="SuggestedRefillOrders" EntityType="WMSModel.SuggestedRefillOrder" />
+    <AssociationSet Name="FK_ware" Association="WMSModel.FK_ware">
+      <End Role="Warehouse" EntitySet="Warehouses" />
+      <End Role="SuggestedRefillOrder" EntitySet="SuggestedRefillOrders" />
+    </AssociationSet>
+    <EntitySet Name="CurrentSales" EntityType="WMSModel.CurrentSale" />
+    <FunctionImport Name="AcceptSuggestion">
+      <Parameter Name="Sid" Mode="In" Type="Int32" />
+      <Parameter Name="Q" Mode="In" Type="Int32" />
+    </FunctionImport>
+  </EntityContainer>
+  <ComplexType Name="sp_helpdiagramdefinition_Result">
+    <Property Type="Int32" Name="version" Nullable="true" />
+    <Property Type="Binary" Name="definition" Nullable="true" />
+  </ComplexType>
+  <ComplexType Name="sp_helpdiagrams_Result">
+    <Property Type="String" Name="Database" Nullable="true" MaxLength="128" />
+    <Property Type="String" Name="Name" Nullable="false" MaxLength="128" />
+    <Property Type="Int32" Name="ID" Nullable="false" />
+    <Property Type="String" Name="Owner" Nullable="true" MaxLength="128" />
+    <Property Type="Int32" Name="OwnerID" Nullable="false" />
+  </ComplexType>
+  <Association Name="FK_MainWarehouse">
+    <End Type="WMSModel.Warehouse" Role="Warehouse" Multiplicity="0..1" />
+    <End Type="WMSModel.ClientOrderDetail" Role="ClientOrderDetail" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Warehouse">
+        <PropertyRef Name="WarehouseID" />
+      </Principal>
+      <Dependent Role="ClientOrderDetail">
+        <PropertyRef Name="WarehouseID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityType Name="SuggestedRefillOrder">
+    <Key>
+      <PropertyRef Name="SuggestedOrderID" />
+    </Key>
+    <Property Name="SuggestedOrderID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="WarehouseID" Type="Int32" />
+    <Property Name="ProductID" Type="Int32" />
+    <NavigationProperty Name="Warehouse" Relationship="WMSModel.FK_ware" FromRole="SuggestedRefillOrder" ToRole="Warehouse" />
+  </EntityType>
+  <Association Name="FK_ware">
+    <End Type="WMSModel.Warehouse" Role="Warehouse" Multiplicity="0..1" />
+    <End Type="WMSModel.SuggestedRefillOrder" Role="SuggestedRefillOrder" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Warehouse">
+        <PropertyRef Name="WarehouseID" />
+      </Principal>
+      <Dependent Role="SuggestedRefillOrder">
+        <PropertyRef Name="WarehouseID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityType Name="CurrentSale">
+    <Key>
+      <PropertyRef Name="OrderID" />
+    </Key>
+    <Property Name="OrderID" Type="Int32" Nullable="false" />
+    <Property Name="WarehouseID" Type="Int32" />
+    <Property Name="TotalPrice" Type="Decimal" Precision="19" Scale="4" />
+  </EntityType>
+</Schema>
