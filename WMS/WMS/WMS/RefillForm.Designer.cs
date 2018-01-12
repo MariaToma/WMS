@@ -36,9 +36,10 @@
             // 
             // progressBar1
             // 
-            this.progressBar1.Location = new System.Drawing.Point(308, 278);
+            this.progressBar1.Location = new System.Drawing.Point(231, 226);
+            this.progressBar1.Margin = new System.Windows.Forms.Padding(2);
             this.progressBar1.Name = "progressBar1";
-            this.progressBar1.Size = new System.Drawing.Size(295, 39);
+            this.progressBar1.Size = new System.Drawing.Size(221, 32);
             this.progressBar1.TabIndex = 0;
             this.progressBar1.Click += new System.EventHandler(this.progressBar1_Click);
             // 
@@ -46,17 +47,19 @@
             // 
             this.textBox1.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.textBox1.Enabled = false;
-            this.textBox1.Location = new System.Drawing.Point(64, 23);
+            this.textBox1.Location = new System.Drawing.Point(48, 19);
+            this.textBox1.Margin = new System.Windows.Forms.Padding(2);
             this.textBox1.Multiline = true;
             this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(794, 142);
+            this.textBox1.Size = new System.Drawing.Size(596, 115);
             this.textBox1.TabIndex = 1;
             // 
             // btnOK
             // 
-            this.btnOK.Location = new System.Drawing.Point(819, 307);
+            this.btnOK.Location = new System.Drawing.Point(614, 249);
+            this.btnOK.Margin = new System.Windows.Forms.Padding(2);
             this.btnOK.Name = "btnOK";
-            this.btnOK.Size = new System.Drawing.Size(107, 50);
+            this.btnOK.Size = new System.Drawing.Size(80, 41);
             this.btnOK.TabIndex = 2;
             this.btnOK.Text = "OK";
             this.btnOK.UseVisualStyleBackColor = true;
@@ -66,20 +69,24 @@
             // 
             this.txtDone.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.txtDone.Enabled = false;
-            this.txtDone.Location = new System.Drawing.Point(538, 354);
+            this.txtDone.Location = new System.Drawing.Point(404, 288);
+            this.txtDone.Margin = new System.Windows.Forms.Padding(2);
             this.txtDone.Name = "txtDone";
-            this.txtDone.Size = new System.Drawing.Size(100, 15);
+            this.txtDone.Size = new System.Drawing.Size(75, 13);
             this.txtDone.TabIndex = 3;
             // 
             // RefillForm
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(979, 398);
+            this.BackgroundImage = global::WMS.Properties.Resources.warehouse_1;
+            this.ClientSize = new System.Drawing.Size(734, 323);
             this.Controls.Add(this.txtDone);
             this.Controls.Add(this.btnOK);
             this.Controls.Add(this.textBox1);
             this.Controls.Add(this.progressBar1);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+            this.Margin = new System.Windows.Forms.Padding(2);
             this.Name = "RefillForm";
             this.Text = "RefillFormcs";
             this.ResumeLayout(false);

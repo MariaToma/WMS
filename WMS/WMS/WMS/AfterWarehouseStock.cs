@@ -7,24 +7,30 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Data.SqlClient;
 
 namespace WMS
 {
     public partial class AfterWarehouseStock : Form
     {
+
         public AfterWarehouseStock()
         {
             InitializeComponent();
             using (var context = new WMSEntities())
             {
-                cmbStockW.DataSource = (from w in context.Warehouses
-                                        select w.WarehouseID).Distinct().ToList();
+                cmbWarehouse.DataSource = (from c in context.Warehouses
+                                           select c.WarehouseID
+                                               ).ToList();
+
             }
+
         }
+
 
         private void btnStockW_Click(object sender, EventArgs e)
         {
-            int warehouseID = Int32.Parse(cmbStockW.SelectedItem.ToString());
+            int warehouseID = Int32.Parse(cmbWarehouse.SelectedItem.ToString());
             using (var context = new WMSEntities())
             {
                 gvStockW.DataSource = (from p in context.Products
@@ -38,5 +44,7 @@ namespace WMS
                                      ).Distinct().ToList();
             }
         }
+
+
     }
 }

@@ -38,17 +38,19 @@
             this.txtDetails.Enabled = false;
             this.txtDetails.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.txtDetails.ForeColor = System.Drawing.Color.Black;
-            this.txtDetails.Location = new System.Drawing.Point(84, 56);
+            this.txtDetails.Location = new System.Drawing.Point(63, 46);
+            this.txtDetails.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.txtDetails.Multiline = true;
             this.txtDetails.Name = "txtDetails";
-            this.txtDetails.Size = new System.Drawing.Size(425, 117);
+            this.txtDetails.Size = new System.Drawing.Size(320, 96);
             this.txtDetails.TabIndex = 0;
             // 
             // btnClose
             // 
-            this.btnClose.Location = new System.Drawing.Point(448, 244);
+            this.btnClose.Location = new System.Drawing.Point(336, 198);
+            this.btnClose.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.btnClose.Name = "btnClose";
-            this.btnClose.Size = new System.Drawing.Size(107, 28);
+            this.btnClose.Size = new System.Drawing.Size(80, 23);
             this.btnClose.TabIndex = 1;
             this.btnClose.Text = "Close";
             this.btnClose.UseVisualStyleBackColor = true;
@@ -56,11 +58,14 @@
             // 
             // DetailsForm
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(595, 295);
+            this.BackgroundImage = global::WMS.Properties.Resources.Depozit;
+            this.ClientSize = new System.Drawing.Size(446, 240);
             this.Controls.Add(this.btnClose);
             this.Controls.Add(this.txtDetails);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+            this.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.Name = "DetailsForm";
             this.Text = "DetailsForm";
             this.ResumeLayout(false);

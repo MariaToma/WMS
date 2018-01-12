@@ -31,7 +31,10 @@ namespace WMS
 
         private void btnRefill_Click(object sender, EventArgs e)
         {
+         
             Form MakeRefill = new MakeRefillForm();
+
+
             MakeRefill.ShowDialog();
         }
 

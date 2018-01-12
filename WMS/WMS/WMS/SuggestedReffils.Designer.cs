@@ -38,19 +38,19 @@
             // gvSuggestedReffils
             // 
             this.gvSuggestedReffils.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.gvSuggestedReffils.Location = new System.Drawing.Point(15, 14);
-            this.gvSuggestedReffils.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.gvSuggestedReffils.Location = new System.Drawing.Point(11, 11);
+            this.gvSuggestedReffils.Margin = new System.Windows.Forms.Padding(2);
             this.gvSuggestedReffils.Name = "gvSuggestedReffils";
             this.gvSuggestedReffils.RowTemplate.Height = 24;
-            this.gvSuggestedReffils.Size = new System.Drawing.Size(739, 199);
+            this.gvSuggestedReffils.Size = new System.Drawing.Size(554, 162);
             this.gvSuggestedReffils.TabIndex = 3;
+            this.gvSuggestedReffils.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.gvSuggestedReffils_CellContentClick);
             // 
             // btnAcceptSuggestion
             // 
-            this.btnAcceptSuggestion.Location = new System.Drawing.Point(531, 307);
-            this.btnAcceptSuggestion.Margin = new System.Windows.Forms.Padding(4);
+            this.btnAcceptSuggestion.Location = new System.Drawing.Point(398, 249);
             this.btnAcceptSuggestion.Name = "btnAcceptSuggestion";
-            this.btnAcceptSuggestion.Size = new System.Drawing.Size(223, 62);
+            this.btnAcceptSuggestion.Size = new System.Drawing.Size(167, 50);
             this.btnAcceptSuggestion.TabIndex = 4;
             this.btnAcceptSuggestion.Text = "Accept Suggestion";
             this.btnAcceptSuggestion.UseVisualStyleBackColor = true;
@@ -60,31 +60,32 @@
             // 
             this.label1.AutoSize = true;
             this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label1.Location = new System.Drawing.Point(45, 243);
-            this.label1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label1.Location = new System.Drawing.Point(34, 197);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(197, 24);
+            this.label1.Size = new System.Drawing.Size(154, 18);
             this.label1.TabIndex = 6;
             this.label1.Text = "Insert desired quantity:";
             // 
             // txtQuantity
             // 
-            this.txtQuantity.Location = new System.Drawing.Point(297, 243);
+            this.txtQuantity.Location = new System.Drawing.Point(223, 197);
+            this.txtQuantity.Margin = new System.Windows.Forms.Padding(2);
             this.txtQuantity.Multiline = true;
             this.txtQuantity.Name = "txtQuantity";
-            this.txtQuantity.Size = new System.Drawing.Size(127, 37);
+            this.txtQuantity.Size = new System.Drawing.Size(96, 31);
             this.txtQuantity.TabIndex = 7;
             // 
             // SuggestedReffils
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(814, 398);
+            this.BackgroundImage = global::WMS.Properties.Resources.csss;
+            this.ClientSize = new System.Drawing.Size(610, 323);
             this.Controls.Add(this.txtQuantity);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.btnAcceptSuggestion);
             this.Controls.Add(this.gvSuggestedReffils);
-            this.Margin = new System.Windows.Forms.Padding(4);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Name = "SuggestedReffils";
             this.Text = "SuggestedReffils";
             this.Load += new System.EventHandler(this.SuggestedReffils_Load);

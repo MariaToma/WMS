@@ -51,6 +51,7 @@
     <Reference Include="System.Core" />
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Security" />
+    <Reference Include="System.ServiceProcess" />
     <Reference Include="System.Transactions" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -98,6 +99,18 @@
     </Compile>
     <Compile Include="DetailsForm.Designer.cs">
       <DependentUpon>DetailsForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Form1.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form1.Designer.cs">
+      <DependentUpon>Form1.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FormBarcode.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormBarcode.Designer.cs">
+      <DependentUpon>FormBarcode.cs</DependentUpon>
     </Compile>
     <Compile Include="MainForm.cs">
       <SubType>Form</SubType>
@@ -215,6 +228,12 @@
     <EmbeddedResource Include="DetailsForm.resx">
       <DependentUpon>DetailsForm.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Form1.resx">
+      <DependentUpon>Form1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormBarcode.resx">
+      <DependentUpon>FormBarcode.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>
     </EmbeddedResource>
@@ -279,6 +298,21 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\images.png" />
+    <None Include="Resources\schema_wms.png" />
+    <None Include="Resources\Image1.bmp" />
+    <None Include="Resources\Depozit.jpg" />
+    <None Include="Resources\Image1.png" />
+    <None Include="Resources\sistem-wms-228.jpg" />
+    <None Include="Resources\Blog_Common-Sense-Warehouse-Performance-Metrics-for-Supply-Chain-Benchmarking.png" />
+    <None Include="Resources\LIFT-warehouse-800x450.jpg" />
+    <None Include="Resources\warehouse.jpg" />
+    <None Include="Resources\truck.jpg" />
+    <None Include="Resources\images.jpg" />
+    <None Include="Resources\refill.jpg" />
+    <None Include="Resources\warehouse_1.jpg" />
+    <None Include="Resources\storage-units-in-texas.jpg" />
+    <None Include="Resources\csss.jpg" />
+    <None Include="Resources\images1.png" />
     <Content Include="WMSModel.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>WMSModel.Context.cs</LastGenOutput>

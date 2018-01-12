@@ -70,11 +70,13 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.BackgroundImage = global::WMS.Properties.Resources.Depozit;
             this.ClientSize = new System.Drawing.Size(624, 245);
             this.Controls.Add(this.txtDone);
             this.Controls.Add(this.progressBar1);
             this.Controls.Add(this.txtProcessing);
             this.Enabled = false;
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Margin = new System.Windows.Forms.Padding(2);
             this.Name = "ProcessingOrder";
             this.Text = "ProcessingOrder";

@@ -47,8 +47,10 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.BackgroundImage = global::WMS.Properties.Resources.LIFT_warehouse_800x450;
             this.ClientSize = new System.Drawing.Size(634, 365);
             this.Controls.Add(this.gvProccOrders);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Name = "ProcessedOrders";
             this.Text = "ProcessedOrders";
             this.Load += new System.EventHandler(this.ProcessedOrders_Load);
