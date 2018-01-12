@@ -20,7 +20,7 @@ namespace WMS
             AutoCompleteText();
 
             SqlConnection conn = new SqlConnection();
-            conn.ConnectionString = @"Data Source=DESKTOP-PG9DG0T;Initial Catalog=WMS;Integrated Security=True";
+            conn.ConnectionString = @"Data Source=.;Initial Catalog=WMS;Integrated Security=True";
 
             SqlCommand command = new SqlCommand();
             command.Connection = conn;

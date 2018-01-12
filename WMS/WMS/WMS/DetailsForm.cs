@@ -45,7 +45,7 @@ namespace WMS
                 }
                 else
                 {
-                    txtDetails.Text = "Refill order from warehouse "+Source+" at adress" +SourceFinal+" to warehouse " + Destination + " at adress " + DestinationAdress.ToString();
+                    txtDetails.Text = "Refill order from warehouse "+Source+" at adress " +SourceFinal+" to warehouse " + Destination + " at adress " + DestinationAdress.ToString();
                     txtDetails.AppendText(Environment.NewLine);
                     txtDetails.AppendText("Product name--->" + ProductName);
                     txtDetails.AppendText(Environment.NewLine);

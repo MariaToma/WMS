@@ -32,7 +32,7 @@ namespace WMS
                                                              //p.ProductID,
                                                              p.ProductName,
                                                              w.WarehouseID,
-                                                             w.Address
+                                                             WarehouseAddress= w.Address
                                                     }
                                         ).Distinct().ToList();
 
@@ -87,6 +87,7 @@ namespace WMS
                         {
                             using (var dbContextTransaction = context.Database.BeginTransaction())
                             {
+
                                 try
                                 {
                                     context.AcceptSuggestion(Int32.Parse(OrderID), Int32.Parse(Quantity));
@@ -95,7 +96,7 @@ namespace WMS
                                     using (var context1 = new WMSEntities())
                                     {
                                         var result = (from p in context1.Products
-                                                      where p.ProductName == ProductName
+                                                      where p.ProductName == Product
                                                       select p.ProductID).First();
                                         int prodID = Int32.Parse(result.ToString());
                                         Form Barcode = new FormBarcode(prodID);
@@ -112,10 +113,10 @@ namespace WMS
                                     dbContextTransaction.Rollback();
                                 }
                             }
-
+                        }
                         }
 
-                    }
+                    
                 }
 
                 this.Close();

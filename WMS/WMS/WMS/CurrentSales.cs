@@ -41,12 +41,16 @@ namespace WMS
             {
                 int WarehouseID = Int32.Parse(warehousesComboBox.SelectedItem.ToString());
                 gvCurrentSales.DataSource = (from c in contex.CurrentSales
-                                             where c.WarehouseID == WarehouseID
+                                             join cd in contex.ClientOrderDetails on c.OrderID equals cd.OrderID
+                                             where c.WarehouseID == WarehouseID & c.OrderID == cd.OrderID
+                                             join p in contex.Products on cd.ProductID equals p.ProductID
                                              select new
                                              {
                                                  Order = c.OrderID,
+                                                 ProductName = p.ProductName,
+                                                 Quantity = cd.Quantity,
                                                  Price = c.TotalPrice
-                                             }).ToList();
+                                             }).Distinct().ToList();
 
 
 
@@ -67,15 +71,18 @@ namespace WMS
                 {
 
                     var queryResult = (from c in contex.CurrentSales
-                                       where c.WarehouseID == WarehouseID
+                                       join cd in contex.ClientOrderDetails on c.OrderID equals cd.OrderID
+                                       where c.WarehouseID == WarehouseID & c.OrderID == cd.OrderID
+                                       join p in contex.Products on cd.ProductID equals p.ProductID
                                        select new
                                        {
                                            Order = c.OrderID,
+                                           ProductName = p.ProductName,
+                                           Quantity = cd.Quantity,
                                            Price = c.TotalPrice
-                                       }).ToList();
+                                       }).Distinct().ToList();
                     var totalSum = (from c in contex.CurrentSales
                                     select c.TotalPrice).Sum();
-
 
 
                     Excel.Application xlApp = new Microsoft.Office.Interop.Excel.Application();
@@ -90,20 +97,26 @@ namespace WMS
                     Excel.Worksheet xlWorkSheet;
                     object misValue = System.Reflection.Missing.Value;
 
+
                     xlWorkBook = xlApp.Workbooks.Add(misValue);
                     xlWorkSheet = (Excel.Worksheet)xlWorkBook.Worksheets.get_Item(1);
                     xlWorkSheet.Cells[1, 1] = "Sales report for warehouse " + WarehouseID.ToString();
                     xlWorkSheet.Cells[2, 1] = "Order ID";
-                    xlWorkSheet.Cells[2, 2] = "Order Price";
+                    xlWorkSheet.Cells[2, 2] = "Product name";
+                    xlWorkSheet.Cells[2, 3] = "Quantity";
+                    xlWorkSheet.Cells[2, 4] = "Price";
+
                     int i = 0;
-                    for (i=0; i < queryResult.Count; i++)
+                    for (i = 0; i < queryResult.Count; i++)
                     {
                         xlWorkSheet.Cells[i + 3, 1] = queryResult[i].Order;
-                        xlWorkSheet.Cells[i + 3, 2] = queryResult[i].Price;
+                        xlWorkSheet.Cells[i + 3, 2] = queryResult[i].ProductName;
+                        xlWorkSheet.Cells[i + 3, 3] = queryResult[i].Quantity;
+                        xlWorkSheet.Cells[i + 3, 4] = queryResult[i].Price;
                     }
 
                     xlWorkSheet.Cells[i + 4, 1] = "Total sales for warehouse " + WarehouseID.ToString() + " are " + totalSum.ToString();
-                    string FileNameAndPath = Path.GetDirectoryName(Application.ExecutablePath) + "\\Sales.xls";
+                    string FileNameAndPath = Path.GetDirectoryName(Application.ExecutablePath) + "\\Sales Warehouse " + WarehouseID.ToString() + ".xls";
                     xlWorkBook.SaveAs(FileNameAndPath, Excel.XlFileFormat.xlWorkbookNormal, misValue, misValue, misValue, misValue, Excel.XlSaveAsAccessMode.xlExclusive, misValue, misValue, misValue, misValue, misValue);
                     xlWorkBook.Close(true, misValue, misValue);
                     xlApp.Quit();
