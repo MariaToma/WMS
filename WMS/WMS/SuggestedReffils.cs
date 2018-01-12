@@ -93,15 +93,14 @@ namespace WMS
                                     context.AcceptSuggestion(Int32.Parse(OrderID), Int32.Parse(Quantity));
                                     context.SaveChanges();
                                     int warehouseID = Int32.Parse(WarehouseID);
-                                    using (var context1 = new WMSEntities())
-                                    {
-                                        var result = (from p in context1.Products
+                                    
+                                        var result = (from p in context.Products
                                                       where p.ProductName == Product
                                                       select p.ProductID).First();
                                         int prodID = Int32.Parse(result.ToString());
                                         Form Barcode = new FormBarcode(prodID);
                                         Barcode.ShowDialog();
-                                    }
+                                    
                                     Form RefillForm = new RefillForm(0, warehouseID, Product, Quantity, true);
                                     RefillForm.ShowDialog();
                                     dbContextTransaction.Commit();
